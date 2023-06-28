@@ -1,12 +1,44 @@
-<input id=max value=10>
-<button id=generate>Random</button>
+<input id=input-text value="10,20">
+<button id=btn-submit>Random</button>
 &nbsp;&nbsp;
 <span style=left-padding:10px; id=result>--</span>
 
 <script>
-document.getElementById('generate').onclick = () => {
-  const max = parseInt(document.getElementById('max').value);
-  const randomInt = Math.floor(Math.random() * max) + 1;
-  document.getElementById('result').textContent = randomInt;
+class Random {
+    static generate(input) {
+        // Parse input string into array of ints with message counts for each account
+        let accountMessageCounts = input.replace('/').replace(/\s/g, '').split(',');
+        accountMessageCounts = accountMessageCounts.map((x) => parseInt(x)); // str > int
+
+        // Select random account and message
+        const randomAccount = Random.int(1, accountMessageCounts.length);
+        const accountCount = accountMessageCounts[randomAccount-1];
+        const randomMessage = Random.int(1, accountCount);
+
+        // Return formatted output
+        return `A: ${randomAccount}, M: ${randomMessage}`;
+    }
+
+    static int(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 }
+
+class View {
+    static init() {
+        document.getElementById('btn-submit').onclick = View.onSubmit;
+    }
+
+    static onSubmit() {
+        const input = document.getElementById('input-text').value;
+        const result = Random.generate(input);
+        document.getElementById('result').textContent = result;
+    }
+}
+View.init();
+// // document.getElementById('generate').onclick = () => {
+// //   const max = parseInt(document.getElementById('max').value);
+// //   const randomInt = Math.floor(Math.random() * max) + 1;
+// //   document.getElementById('result').textContent = randomInt;
+// }
 </script>
