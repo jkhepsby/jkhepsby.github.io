@@ -1,0 +1,12 @@
+<input id=max value=10>
+<button id=generate>Random</button>
+&nbsp;&nbsp;
+<span style=left-padding:10px; id=result>--</span>
+
+<script>
+document.getElementById('generate').onclick = () => {
+  const max = parseInt(document.getElementById('max').value);
+  const randomInt = Math.floor(Math.random() * max) + 1;
+  document.getElementById('result').textContent = randomInt;
+}
+</script>
